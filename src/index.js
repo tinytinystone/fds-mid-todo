@@ -2,7 +2,7 @@ import "@babel/polyfill"; // 이 라인을 지우지 말아주세요!
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://destiny-screwdriver.glitch.me/"
+  baseURL: "https://vast-flyingfish.glitch.me/"
 });
 
 // Axios Interceptor - 그때그때 다른 설정 사용하기
@@ -62,7 +62,20 @@ async function drawTodoList() {
   const fragment = document.importNode(templates.todoList, true);
 
   // 2. 내용 채우고 이벤트 리스너 등록하기
-  const todoListEl = fragment.querySelector(".todo-list");
+  const todoListEl = fragment.querySelector(".todo-list")
+  const todoFormEl = fragment.querySelector(".todo-form")
+
+  todoFormEl.addEventListener('submit', async e => {
+    e.preventDefault()
+    const body = e.target.elements.body.value
+    const res = await api.post('/todos', {
+      body,
+      complete: false
+    })
+    if(res.status === 201){
+      drawTodoList()
+    }
+  })
 
   list.forEach(todoItem => {
     // 1. 템플릿 복사하기
