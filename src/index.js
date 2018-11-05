@@ -82,12 +82,25 @@ async function drawTodoList() {
     const fragment = document.importNode(templates.todoItem, true);
 
     // 2. 내용 채우고 이벤트 리스너 등록하기
+    const todoItemEl = fragment.querySelector('.todo-item')
     const bodyEl = fragment.querySelector(".body");
 
     bodyEl.textContent = todoItem.body;
 
+    const deleteBtnEl = document.createElement('button')
+    deleteBtnEl.textContent = '삭제'
+
+    deleteBtnEl.addEventListener('click', async e => {
+      e.preventDefault()
+      const res = await api.delete('todos/' + todoItem.id)
+      if(res.status === 200){
+        drawTodoList()
+      }
+    })
+
     // 3. 문서 내부에 삽입하기
     todoListEl.appendChild(fragment);
+    todoItemEl.appendChild(deleteBtnEl);
   });
 
   // 3. 문서 내부에 삽입하기
