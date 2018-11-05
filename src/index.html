@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,8 @@
   <title>중간 프로젝트 템플릿</title>
   <link rel="stylesheet" href="./index.scss">
 </head>
-<body>
-  <h1>중간 프로젝트 템플릿</h1>
 
+<body>
   <template id="login-form">
     <form class="login-form">
       <input type="text" name="username">
@@ -18,10 +18,20 @@
     </form>
   </template>
 
-  <div class="root">
+  <template id="todo-list">
+    <h1>할 일 목록</h1>
+    <ul class="todo-list"></ul>
+  </template>
 
-  </div>
+  <template id="todo-item">
+    <li class="todo-item">
+      <span class="body"></span>
+    </li>
+  </template>
 
+
+  <div class="root"></div>
   <script src="./index.js"></script>
 </body>
+
 </html>
