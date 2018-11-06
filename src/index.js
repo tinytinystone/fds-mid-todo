@@ -1,4 +1,4 @@
-import "@babel/polyfill"; // 이 라인을 지우지 말아주세요!
+import "@babel/polyfill";
 import axios from "axios";
 
 const api = axios.create({
@@ -82,13 +82,10 @@ async function drawTodoList() {
     const fragment = document.importNode(templates.todoItem, true);
 
     // 2. 내용 채우고 이벤트 리스너 등록하기
-    const todoItemEl = fragment.querySelector('.todo-item')
     const bodyEl = fragment.querySelector(".body");
+    const deleteBtnEl = fragment.querySelector('.delete');
 
     bodyEl.textContent = todoItem.body;
-
-    const deleteBtnEl = document.createElement('button')
-    deleteBtnEl.textContent = '삭제'
 
     deleteBtnEl.addEventListener('click', async e => {
       e.preventDefault()
@@ -100,7 +97,6 @@ async function drawTodoList() {
 
     // 3. 문서 내부에 삽입하기
     todoListEl.appendChild(fragment);
-    todoItemEl.appendChild(deleteBtnEl);
   });
 
   // 3. 문서 내부에 삽입하기
