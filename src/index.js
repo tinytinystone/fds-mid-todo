@@ -91,6 +91,11 @@ async function drawTodoList() {
     // 2. 내용 채우고 이벤트 리스너 등록하기
     const bodyEl = fragment.querySelector(".body");
     const deleteBtnEl = fragment.querySelector('.delete');
+    const isCompletedEl = fragment.querySelector('.complete')
+
+    if(todoItem.complete){
+      isCompletedEl.setAttribute('checked', '')
+    }
 
     bodyEl.textContent = todoItem.body;
 
@@ -99,6 +104,16 @@ async function drawTodoList() {
       const res = await api.delete('todos/' + todoItem.id)
       if(res.status === 200){
         drawTodoList()
+      }
+    })
+
+    isCompletedEl.addEventListener('click', async e => {
+      e.preventDefault()
+      const res = await api.patch('todos/' + todoItem.id, {
+        complete: !todoItem.complete
+      })
+      if (res.status === 200){
+        drawTodoList();
       }
     })
 
