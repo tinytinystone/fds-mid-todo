@@ -67,15 +67,16 @@ async function drawTodoList() {
   const logoutBtnEl = fragment.querySelector('.logout')
 
   todoFormEl.addEventListener('submit', async e => {
+    document.body.classList.add('loading')
     e.preventDefault()
     const body = e.target.elements.body.value
     const res = await api.post('/todos', {
       body,
       complete: false
     })
-    if(res.status === 201){
-      drawTodoList()
-    }
+    drawTodoList().then(() => {
+      document.body.classList.remove("loading")
+    })
   })
 
   logoutBtnEl.addEventListener('click', e => {
@@ -108,13 +109,12 @@ async function drawTodoList() {
     })
 
     isCompletedEl.addEventListener('click', async e => {
-      e.preventDefault()
-      const res = await api.patch('todos/' + todoItem.id, {
+      // 주석을 풀면 비관적 업데이트 방식으로 변환
+      // e.preventDefault()
+      await api.patch('todos/' + todoItem.id, {
         complete: !todoItem.complete
       })
-      if (res.status === 200){
-        drawTodoList();
-      }
+      drawTodoList();
     })
 
     // 3. 문서 내부에 삽입하기
